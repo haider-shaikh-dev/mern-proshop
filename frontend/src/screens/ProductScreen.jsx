@@ -31,8 +31,9 @@ const navigate = useNavigate();
   } = useGetProductDetailsQuery(productId);
 
   const addToCartHandler = ()=>{
-    console.log('adding to cart')
+    console.log('adding to cart',product)
     dispatch(addToCart({...product,qty}));
+    console.log('after add cart')
     navigate("/cart");
   }
 

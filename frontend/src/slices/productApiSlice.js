@@ -18,5 +18,4 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-// console.log('33-`${PRODUCT_URL}/${productId}` ',`${PRODUCT_URL}/${'123'}`)
 export const { useGetProductsQuery, useGetProductDetailsQuery } = productsApiSlice;

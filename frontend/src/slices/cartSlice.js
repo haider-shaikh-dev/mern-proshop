@@ -5,7 +5,6 @@ const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
   : { cartItems: [] };
 
-//add decimals utility function
 const cartSlice = createSlice({
   name: "cart",
   initialState,
