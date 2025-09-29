@@ -1,4 +1,3 @@
-import { get } from "mongoose";
 import { PRODUCT_URL } from "../constants";
 import { apiSlice } from "./apiSlices";
 
