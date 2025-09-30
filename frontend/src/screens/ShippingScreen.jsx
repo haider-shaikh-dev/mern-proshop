@@ -22,11 +22,11 @@ const ShippingScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
-    navigate("/payment"); //continue from here
+    navigate("/payment");
   };
   return (
     <FormContainer>
-        <CheckoutSteps step1 step2 />
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group id="address" className="my-2">

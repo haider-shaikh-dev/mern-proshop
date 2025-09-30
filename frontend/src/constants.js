@@ -3,5 +3,5 @@ export const BASE_URL=process.env.NODE_ENV === 'developmen'? 'http://localhost:8
 
 export const PRODUCT_URL = '/api/products';
 export const USERS_URL = '/api/users';
-export const ORDERS_URL = '/api/config/paypal';
+export const ORDERS_URL = '/api/orders';
 export const PAYPAL_URL = '/api/products';

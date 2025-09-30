@@ -32,7 +32,7 @@ const orderSchecma = new mongoose.Schema(
         },
       },
     ],
-    shippingAdress: {
+    shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
@@ -44,6 +44,10 @@ const orderSchecma = new mongoose.Schema(
       updated_time: { type: String },
       email_address: { type: String },
     },
+    paymentMethod: {
+      type: String,
+      required: true,
+      },
     itemPrice: {
       type: Number,
       required: true,
