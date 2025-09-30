@@ -3,7 +3,7 @@ const FormContainer = ({ children }) => {
   return (
     <Container>
       <Row className="justify-content-md-center">
-        <Col xl={12} md={6}>
+        <Col xl={6} md={3}>
           {children}
         </Col>
       </Row>

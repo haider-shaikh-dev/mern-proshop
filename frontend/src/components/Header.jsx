@@ -1,16 +1,37 @@
 import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import Loader from "./Loader";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const logoutHandler = () => {
+  const [logout, { isLoading }] = useLogoutMutation();
+
+  const logoutHandler = async (e) => {
     console.log("logout");
+    e.preventDefault();
+    try {
+      await logout().unwrap();
+      dispatch(deleteCredentials());
+      console.log("logout success");
+
+      navigate('/login');
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
   };
+
+   {isLoading && <Loader />}
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
