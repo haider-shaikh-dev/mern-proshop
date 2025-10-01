@@ -20,8 +20,6 @@ const addOrderItem = asyncHandler(async (req, res) => {
   if (orderItems && orderItems.length === 0) {
     throw new Error("No order items");
   } else {
-
-    console.log('req.body : ',req.body)
     const order = new Order({
       orderItems: orderItems.map((x) => ({
         ...x,
@@ -40,7 +38,6 @@ const addOrderItem = asyncHandler(async (req, res) => {
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
   }
-
 });
 
 // @desc get Logged in user Orders
@@ -57,7 +54,10 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // @access Private
 const getOrderById = asyncHandler(async (req, res) => {
   // populate will add name and email from user collection as its id is referenced in orders model
-  const orders = Order.findById(req.params.id).populate("user", "name email");
+  const orders = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
 
   if (orders) {
     res.status(200).json(orders);
@@ -65,14 +65,36 @@ const getOrderById = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error(" Order not found");
   }
-
-  //   res.json("Admin-route - get order by id");
 });
 
 // @desc update orders to paid
 // @route PUT /api/orders/:id/pay
 // @access Private/Admin
 const updateOrderToPaid = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      email_address: req.body.email_address,
+    };
+
+    const updatedOrder = order.save();
+
+    if (updatedOrder) {
+      res.status(200).json(updatedOrder);
+    } else {
+      res.status(404);
+      throw new Error("Error while updating order");
+    }
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+
   res.json("update order to paid");
 });
 
