@@ -14,7 +14,6 @@ const PaymentScreen = () => {
   const navigate = useNavigate();
   const cart= useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  // console.log('shippingAddress : ',shippingAddress)
 
   useEffect(() => {
     if (!shippingAddress) {
@@ -23,7 +22,6 @@ const PaymentScreen = () => {
   }, [shippingAddress,navigate]);
 
   const submitHandler = async(e)=>{
-    console.log('submit payment')
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
     navigate('/placeorder')

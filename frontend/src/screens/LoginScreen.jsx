@@ -27,7 +27,6 @@ const LoginScreen = () => {
   const redirect = sp.get("redirect") || "/";
 
   useEffect(() => {
-    console.log("isUserInfo ", userInfo);
     if (userInfo) {
       navigate(redirect); // redirect if user info in localstorage means user is logged in
     }

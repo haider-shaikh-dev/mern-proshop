@@ -31,13 +31,10 @@ const navigate = useNavigate();
   } = useGetProductDetailsQuery(productId);
 
   const addToCartHandler = ()=>{
-    console.log('adding to cart',product)
     dispatch(addToCart({...product,qty}));
-    console.log('after add cart')
     navigate("/cart");
   }
 
-  console.log(qty);
   return (
     <>
       <Link className="btn btn-light my-3" to="/">

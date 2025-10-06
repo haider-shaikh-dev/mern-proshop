@@ -22,7 +22,7 @@ router.post("/auth", authUser);
 router
   .route("/profile")
   .get(protect, getUserProfile)
-  .post(protect, updateUserProfile);
+  .put(protect, updateUserProfile);
 
 router
   .route("/:id")

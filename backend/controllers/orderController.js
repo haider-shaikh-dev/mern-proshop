@@ -15,8 +15,6 @@ const addOrderItem = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body;
 
-  // console.log('req.body.shippingAddress ',req.body.shippingAddress)
-
   if (orderItems && orderItems.length === 0) {
     throw new Error("No order items");
   } else {
@@ -44,9 +42,16 @@ const addOrderItem = asyncHandler(async (req, res) => {
 // @route GET /api/orders/mine
 // @access Private
 const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = Order.find({ user: req._id });
+
+  // console.log('user id',req.user._id);
+  // const orders = await Order.find({ user: req.user._id });
+  const orders = await Order.find({ user: '68de5af1770e3c9ceab1f00f' });
+
+  if (!orders) {
+    res.status(404);
+    throw new Error("No orders found for this user");
+  }
   res.status(201).json(orders);
-  //   res.json("LoggedIn User's order");
 });
 
 // @desc get Order by Id

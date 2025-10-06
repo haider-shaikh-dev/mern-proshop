@@ -18,12 +18,10 @@ const Header = () => {
   const [logout, { isLoading }] = useLogoutMutation();
 
   const logoutHandler = async (e) => {
-    console.log("logout");
     e.preventDefault();
     try {
       await logout().unwrap();
       dispatch(deleteCredentials());
-      console.log("logout success");
 
       navigate('/login');
     } catch (error) {
