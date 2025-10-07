@@ -148,6 +148,17 @@ const ProfileScreen = () => {
                       <Message variant="danger">Not Delivered</Message>
                     )}
                   </td>
+                  <td>
+                    <Button
+                      type="button"
+                      variant="light" 
+                      className="btn-sm"
+                      href={`/orders/${order._id}`}
+                    >
+                      Details
+                    </Button>
+
+                  </td>
                 </tr>
               ))}
             </tbody>

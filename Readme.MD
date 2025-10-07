@@ -1,3 +1,10 @@
+npm run dev
+npm run data:import
+on Login page
+haider@email.com
+123456
+npm run dev
+
 29092025
 - Call alin after 10 days i.e. by 09102025 fro mern job in Mumbai.
 

@@ -43,9 +43,7 @@ const addOrderItem = asyncHandler(async (req, res) => {
 // @access Private
 const getMyOrders = asyncHandler(async (req, res) => {
 
-  // console.log('user id',req.user._id);
-  // const orders = await Order.find({ user: req.user._id });
-  const orders = await Order.find({ user: '68de5af1770e3c9ceab1f00f' });
+  const orders = await Order.find({ user: req.user._id });
 
   if (!orders) {
     res.status(404);
