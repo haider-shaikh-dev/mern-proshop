@@ -26,6 +26,9 @@ import PlaceOrdersScreen from "./screens/PlaceOrdersScreen";
 import OrderScreen from "./screens/OrderScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
+import AdminRoutes from "./components/AdminRoutes";
+import OrderListScreen from "./screens/admin/OrderListScreen";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -41,6 +44,10 @@ const router = createBrowserRouter(
         <Route path="/orders/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
       </Route>
+      <Route path="" element={<AdminRoutes />}>
+        <Route path="/admin/orderlist" element={<OrderListScreen />} />
+      </Route>
+      <Route path="*" element={<h1>404 Not Found!</h1>} />
     </Route>
   )
 );

@@ -23,13 +23,15 @@ const Header = () => {
       await logout().unwrap();
       dispatch(deleteCredentials());
 
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
   };
 
-   {isLoading && <Loader />}
+  {
+    isLoading && <Loader />;
+  }
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
@@ -52,16 +54,34 @@ const Header = () => {
                   </Badge>
                 )}
               </Nav.Link>
-              {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to={"/profile"}>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
 
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+              {userInfo ? (
+                userInfo.isAdmin ? (
+                  <NavDropdown title="Admin" id="adminmenu">
+                    <LinkContainer to={"/admin/productlist"}>
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to={"/admin/userlist"}>
+                      <NavDropdown.Item>Users</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to={"/admin/orderlist"}>
+                      <NavDropdown.Item>Order</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                ) : (
+                  <NavDropdown title={userInfo.name} id="username">
+                    <LinkContainer to={"/profile"}>
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )
               ) : (
                 <Nav.Link href="/login">
                   <FaUser />
