@@ -15,7 +15,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5, // 5 seconds cache
     }),
+    createProduct: builder.mutation({
+      query: () => ({
+        url: PRODUCT_URL,
+        method: 'POST',
+      }),
+      invalidatesTags:['Products'] //to clear cache
+    })
   }),
 });
 
-export const { useGetProductsQuery, useGetProductDetailsQuery } = productsApiSlice;
+export const { useGetProductsQuery, useGetProductDetailsQuery,useCreateProductMutation } = productsApiSlice;
