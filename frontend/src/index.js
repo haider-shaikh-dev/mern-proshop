@@ -28,6 +28,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 
 import AdminRoutes from "./components/AdminRoutes";
 import OrderListScreen from "./screens/admin/OrderListScreen";
+import ProductListScreen from "./screens/admin/ProductListScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="" element={<AdminRoutes />}>
         <Route path="/admin/orderlist" element={<OrderListScreen />} />
+        <Route path="/admin/productlist" element={<ProductListScreen />} />
       </Route>
       <Route path="*" element={<h1>404 Not Found!</h1>} />
     </Route>

@@ -18,6 +18,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useDeliverOrderMutation
 } from "../slices/ordersApiSlice";
 
 const OrderScreen = () => {
@@ -31,6 +32,7 @@ const OrderScreen = () => {
   } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
   const [{ isPending }, payPalDispatch] = usePayPalScriptReducer();
 
@@ -86,6 +88,19 @@ const OrderScreen = () => {
     toast.success("Payment Successful");
   }
 
+  const deliverOrderHandler = async () => {
+
+    try {
+      console.log('test2', orderId)
+      await deliverOrder(orderId);//.unwrap();
+      refetch();
+      toast.success("Marked as delivered Successfully");
+    } catch (error) {
+     toast.error(error?.data?.message || error?.message);
+    }
+
+  }
+
   function onError(error) {
     toast.error(error?.message);
   }
@@ -110,7 +125,6 @@ const OrderScreen = () => {
     <Loader />
   ) : error ? (
     <Message variant={"danger"}>
-      {" "}
       {error?.data?.message || error?.error}
     </Message>
   ) : (
@@ -156,7 +170,7 @@ const OrderScreen = () => {
             <ListGroup.Item>
               <h2>Order Item</h2>
               {order.orderItems.map((item) => (
-                <ListGroup.Item>
+                <ListGroup.Item key={item._id}>
                   <Row>
                     <Col md={1}>
                       <Image src={item.image} fluid rounded />
@@ -212,21 +226,33 @@ const OrderScreen = () => {
                           onClick={onApproveTest}
                           style={{ marginBottom: "10px" }}
                         >
-                          Test Pay Order
+                          Mark As Paid
                         </Button>
                       </div>
                       <div>
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={onApprove}
-                        onError={onError}
-                      ></PayPalButtons>
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        ></PayPalButtons>
                       </div>
                     </>
                   )}
                 </ListGroup.Item>
               )}
-              {/* MARK AS DELIVERED PLACEHOLDER */}
+
+              {loadingDeliver && <Loader />}
+
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered &&
+                (<ListGroup.Item>
+                  <Button
+                    onClick={deliverOrderHandler}
+                    style={{ marginBottom: "10px" }}
+                    className="btn btn-block"
+                  >
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>)}
             </ListGroup>
           </Card>
         </Col>
