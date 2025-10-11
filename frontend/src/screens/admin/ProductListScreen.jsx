@@ -70,7 +70,7 @@ const ProductListScreen = () => {
               <td>{product.brand}</td>
 
               <td>
-                <LinkContainer to={`/admin/product/${product._id}`}>
+                <LinkContainer to={`/admin/product/${product._id}/edit`}>
                   <Button variant='light' className='btn-sm mx-2'><FaEdit /></Button></LinkContainer>
                 <Button onClick={() => handleProductDelete(product._id)} variant='danger' className='btn-sm mx-2'><FaTrash style={{ color: 'white' }} /></Button>
               </td>

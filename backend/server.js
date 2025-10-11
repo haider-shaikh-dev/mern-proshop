@@ -9,7 +9,7 @@ import connectDB from './config/db.js';
 import { notFound,errorHandler } from './middleware/errorMiddleware.js';
 import { PAYPAL_URL } from '../frontend/src/constants.js';
 
-const port= process.env.PORT || 5000;
+const port= process.env.PORT || 8000;
 
 connectDB(); //connection to the database
 const app = express();

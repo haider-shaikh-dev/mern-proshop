@@ -5,6 +5,7 @@ import {
   getProducts,
   getProductById,
   createProduct,
+  updateProducts,
 } from "../controllers/productController.js";
 
 //-> prefix is /api/products
@@ -12,7 +13,7 @@ const router = express.Router();
 
 router.route("/").get(getProducts).post(protect,admin,createProduct);
 
-router.route("/:id").get(getProductById);
+router.route("/:id").get(getProductById).put( updateProducts);
 
 
 export default router;
