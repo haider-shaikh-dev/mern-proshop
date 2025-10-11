@@ -51,7 +51,6 @@ const createProduct = asyncHandler(async (req, res) => {
 // @access private/admin
 const updateProducts = asyncHandler(async (req, res) => {
 
-
   const { name, price, image, brand, category, countInStock, description } = req.body;
 
   const product = await Product.findById(req.body.productId);

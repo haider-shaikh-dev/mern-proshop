@@ -1,16 +1,17 @@
 
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Image, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 import { FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productApiSlice'
 
 const ProductListScreen = () => {
 
-  const { data: products, isLoading, error,refetch } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
 
   const [createProduct, { isLoading: loadingCraeteProduct }] = useCreateProductMutation();
   console.log('products : ', products)
@@ -18,17 +19,17 @@ const ProductListScreen = () => {
     console.log('handleProductDelete')
   }
 
-  const handleCreateProduct = async ()=>{
-   if(window.confirm("Create new product?")){
-    try {
-       console.log('creating product')
-      await createProduct();
-      refetch();
-    } catch (error) {
-      toast.error(error?.data?.message || error.message)
+  const handleCreateProduct = async () => {
+    if (window.confirm("Create new product?")) {
+      try {
+        console.log('creating product')
+        await createProduct();
+        refetch();
+      } catch (error) {
+        toast.error(error?.data?.message || error.message)
+      }
     }
   }
-}
 
   return (<>
     <Row className='align-items-center'>
@@ -49,6 +50,7 @@ const ProductListScreen = () => {
       <thead>
         <tr>
           <td>ID</td>
+          <td>Image</td>
           <td>NAME</td>
           <td>PRICE</td>
           <td>CATEGORY</td>
@@ -64,7 +66,8 @@ const ProductListScreen = () => {
             <tr key={product._id}>
               <td>{product._id}</td>
 
-              <td>{product.name}</td>
+              <td><Link to={`/product/${product._id}`}><Image src={product.image} fluid roundedCircle style={{ height: '55px', border: '1px solid red' }} /></Link></td>
+              <td><Link to={`/product/${product._id}`}>{product.name}</Link></td>
               <td>${product.price}</td>
               <td>{product.brand}</td>
               <td>{product.brand}</td>
