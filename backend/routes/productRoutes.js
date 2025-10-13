@@ -6,14 +6,15 @@ import {
   getProductById,
   createProduct,
   updateProducts,
+  deleteProduct,
 } from "../controllers/productController.js";
 
 //-> prefix is /api/products
 const router = express.Router();
 
-router.route("/").get(getProducts).post(protect,admin,createProduct);
+router.route("/").get(getProducts).post(protect, admin, createProduct);
 
-router.route("/:id").get(getProductById).put( updateProducts);
+router.route("/:id").get(getProductById).put(updateProducts).delete(protect, admin, deleteProduct);
 
 
 export default router;
