@@ -19,7 +19,7 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [profile, { isLoading: loadingProfile, isError, error }] =
+  const [profile, { isLoading: loadingProfile }] =
     useProfileMutation();
 
   const { data: myOrders, isLoading: loadingOrders, error: loadingError } = useGetMyOrdersQuery();
@@ -112,7 +112,7 @@ const ProfileScreen = () => {
         <h2>User Orders</h2>
         {loadingOrders ? (
           <Loader />
-        ) :  myOrders?.length === 0 ?   (
+        ) : myOrders?.length === 0 ? (
           <Message>You have no orders</Message>
         ) : (
           <Table striped bordered hover responsive className="table-sm">
@@ -151,7 +151,7 @@ const ProfileScreen = () => {
                   <td>
                     <Button
                       type="button"
-                      variant="light" 
+                      variant="light"
                       className="btn-sm"
                       href={`/orders/${order._id}`}
                     >

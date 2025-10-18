@@ -20,7 +20,7 @@ const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, { isLoading, isError, error }] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -37,18 +37,18 @@ const RegisterScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if(password !== confirmPassword){
-        toast.error('Confirm Password does not match!')
-    }else{
-    try {
-        const res = await register({ name,email, password }).unwrap();
+    if (password !== confirmPassword) {
+      toast.error('Confirm Password does not match!')
+    } else {
+      try {
+        const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
-        } catch (error) {
+      } catch (error) {
         toast.error(error?.data?.message || error.error);
-        }
+      }
     }
-   
+
   };
 
   return (
