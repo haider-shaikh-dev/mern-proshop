@@ -11,7 +11,7 @@ import connectDB from './config/db.js';
 import { notFound,errorHandler } from './middleware/errorMiddleware.js';
 import { PAYPAL_URL } from '../frontend/src/constants.js';
 
-const port= process.env.PORT || 8000;
+const port= process.env.PORT || 5000;
 
 connectDB(); //connection to the database
 const app = express();
@@ -21,9 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); //Cookie parser middleware
 
-app.get("/", (req, res) => {
-  res.send("NodeJS API is running!!!");
-});
+
 
 app.use('/api/products',productRoutes);
 app.use('/api/users',userRoutes);
@@ -37,9 +35,18 @@ const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  
 //Make the uploads folder static so that we can access the images
 
-//Error Handling middlewares
-  
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+  //splat is used to match all routes
+  app.get('/*splat', (req, res) => res.sendFile
+    (path.resolve(__dirname, 'frontend', 'build', 'index.html')));
+} else {
+  app.get("/", (req, res) => {
+    res.send("NodeJS API is running on port " + port);
+  });
+}
 
+//Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 
