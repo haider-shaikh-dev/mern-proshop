@@ -26,7 +26,6 @@ const cartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
-
       return updateCart(state);
     },
     saveShippingAddress:(state,action)=>{
@@ -41,7 +40,7 @@ const cartSlice = createSlice({
       state.cartItems = [];
       return updateCart(state);
     },
-    resetCart:(state)=>(state = initialState)
+    resetCart: (state) => (state = initialState)
   },
 });
 
