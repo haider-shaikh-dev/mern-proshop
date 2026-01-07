@@ -3,6 +3,9 @@ npm run data:import
 on Login page
 haider@email.com
 123456
+
+admin@email.com
+123456
 npm run dev
 
 29092025

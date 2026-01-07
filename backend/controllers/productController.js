@@ -14,7 +14,6 @@ const getProducts = asyncHandler(async (req, res) => {
       $options: 'i'
     }
   } : {}; // search by name
-  console.log('keyword', keyword);
 
   const count = await Product.countDocuments({ ...keyword });
 
@@ -69,7 +68,6 @@ const updateProducts = asyncHandler(async (req, res) => {
   const { name, price, image, brand, category, countInStock, description } = req.body;
 
   const product = await Product.findById(req.body.productId);
-  console.log('product to be updated', product);
 
   if (product) {
 
@@ -100,7 +98,6 @@ const deleteProduct = asyncHandler(async (req, res) => {
     //  path.join(process.cwd(), "backend", "uploads", imgRel),
     //  await fs.promises.unlink(p);
     const deletedProduct = await Product.deleteOne({ _id: product._id });
-    console.log(deletedProduct);
     return res.status(200).json({ message: "Product removed" });
   } else {
     res.status(404);

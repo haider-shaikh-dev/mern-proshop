@@ -37,7 +37,6 @@ const UserEditScreen = () => {
 
         e.preventDefault();
 
-        console.log('updating user', name, email, isAdmin)
         const updatedUser = {
             userId,
             name,

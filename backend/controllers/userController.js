@@ -170,7 +170,6 @@ const getUserByID = asyncHandler(async (req, res) => {
 // @route PUT /api/users/:id
 // @access private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  // console.log('update user', req.params.id, req.body);
   const user = await User.findById(req.params.id).select("-password");
   if (user) {
     user.name = req.body.name || user.name;

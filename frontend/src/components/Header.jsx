@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useLogoutMutation } from "../slices/usersApiSlice";
+import { resetCart } from "../slices/cartSlice";
 import Loader from "./Loader";
 import SearchBox from "./SearchBox";
 
@@ -23,6 +24,7 @@ const Header = () => {
     try {
       await logout().unwrap();
       dispatch(deleteCredentials());
+      dispatch(resetCart());
 
       navigate("/login");
     } catch (error) {

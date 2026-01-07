@@ -91,7 +91,6 @@ const OrderScreen = () => {
   const deliverOrderHandler = async () => {
 
     try {
-      console.log('test2', orderId)
       await deliverOrder(orderId);//.unwrap();
       refetch();
       toast.success("Marked as delivered Successfully");

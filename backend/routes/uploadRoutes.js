@@ -11,28 +11,61 @@ const storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-  } 
+  }
 });
 
 const checkFileType = (file, cb) => {
   const filetypes = /jpg|jpeg|png/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
-    if (extname && mimetype) {
-        return cb(null, true);
-    } else {
-        cb('Images only!');
-    }
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb('Images only!');
+  }
 }
 
-const upload = multer({ storage });
+//check if error occurs here
+const fileFilters = (req, file, cb) => {
+  const filetypes = /jp?g|png|webp/;
+  const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
 
-router.post('/', upload.single('image'), (req, res) => {
-  res.send({
-    message:' Image uploaded successfully',
-    image: `/${req.file.path}`
-  });
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = mimetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb(new Error('Images only!'), false);
+  }
+}
+
+const upload = multer({ storage, fileFilters });
+const uploadSingleImage = upload.single('image')
+
+// router.post('/', upload.single('image'), (req, res) => {
+//   res.send({
+//     message:' Image uploaded successfully',
+//     image: `/${req.file.path}`
+//   });
+// });
+
+router.post('/', (req, res) => {
+  uploadSingleImage(req, res, function (err) {
+    if (err) {
+      res.status(400).send({ message: err.message })
+    }
+
+    res.status(200).send({
+      message: ' Image uploaded successfully',
+      image: `/${req.file.path}`
+    });
+  })
+
+  // res.send({
+  //   message:' Image uploaded successfully',
+  //   image: `/${req.file.path}`
+  // });
 });
+
 export default router;
-
-
